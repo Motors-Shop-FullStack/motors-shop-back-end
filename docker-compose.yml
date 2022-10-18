@@ -1,7 +1,6 @@
 version: "3.9"
 services:
   api:
-    # stdin_open: true
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,16 +8,12 @@ services:
     ports:
       - 3000:3000
     environment:
-      - POSTGRES_USER=danilo
-      - POSTGRES_DB=motors_shop
-      - POSTGRES_PASSWORD=1234
-      - POSTGRES_HOST=db
+      - DB_HOST=db
     depends_on:
       db:
         condition: service_healthy
     volumes:
       - .:/app
-    # restart: always
 
   pgadmin:
     image: dpage/pgadmin4
@@ -37,13 +32,10 @@ services:
   db:
     image: postgres:latest
     container_name: db
-    # hostname: postgres
     ports:
       - 5431:5432
-    environment:
-      - POSTGRES_USER=danilo
-      - POSTGRES_PASSWORD=1234
-      - POSTGRES_DB=motors_shop
+    env_file:
+      - .env
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
@@ -52,7 +44,6 @@ services:
       start_period: 5s
     volumes:
       - motors-shop:/var/lib/postgresql/data
-    # restart: unless-stopped
 
 volumes:
   motors-shop:
