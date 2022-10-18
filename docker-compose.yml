@@ -1,0 +1,59 @@
+version: "3.9"
+services:
+  api:
+    # stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    ports:
+      - 3000:3000
+    environment:
+      - POSTGRES_USER=danilo
+      - POSTGRES_DB=motors_shop
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_HOST=db
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    # restart: always
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    depends_on:
+      - db
+    ports:
+      - "5555:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    restart: unless-stopped
+
+  db:
+    image: postgres:latest
+    container_name: db
+    # hostname: postgres
+    ports:
+      - 5431:5432
+    environment:
+      - POSTGRES_USER=danilo
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=motors_shop
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    volumes:
+      - motors-shop:/var/lib/postgresql/data
+    # restart: unless-stopped
+
+volumes:
+  motors-shop:
+  pgadmin-data:
