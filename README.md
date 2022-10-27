@@ -34,13 +34,25 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 Faça a conexão ao seu PostgreSQL e crie seu banco de dados SQL:
 
 ```bash
-  CREATEDATABASE <NOMEDOBANCO>;
+  CREATE DATABASE <NOMEDOBANCO>;
 ```
 
 Execute sua aplicação via docker:
 
 ```bash
   docker compose up --build
+```
+
+Execute o Prisma:
+
+```bash
+  yarn prisma
+```
+
+Gerar/Rodar suas migrations:
+
+```bash
+  yarn prisma migrate dev --name createDb
 ```
 
 ## Autores
