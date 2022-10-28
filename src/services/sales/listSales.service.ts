@@ -1,4 +1,5 @@
 import { prisma } from "../../app";
+import { ISalesCreate, ISalesResponse } from "../../interfaces/sales.interface";
 
 export const listSalesService = async (
   data: ISalesCreate
@@ -10,10 +11,8 @@ export const listSalesService = async (
       mileage: data.mileage,
       price: data.price,
       description: data.description,
-      type: data.type,
-      published: data.published,
-      created_at: new Date(),
-      updated_at: new Date(),
+      type: data.type == "SELLER" ? "SELLER" : "BUYER",
+      published: data.published ? true : false,
       userId: data.user.id,
     },
     include: {

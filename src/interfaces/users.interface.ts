@@ -1,9 +1,9 @@
-interface IUserLogin {
+export interface IUserLogin {
   email: string;
   password: string;
 }
 
-interface IUserCreate {
+export interface IUserCreate {
   name: string;
   email: string;
   password: string;
@@ -15,7 +15,7 @@ interface IUserCreate {
   address?: string;
 }
 
-interface IUserCreateResponse {
+export interface IUserCreateResponse {
   id: string;
   name: string;
   email: string;
