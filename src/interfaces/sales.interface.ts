@@ -26,3 +26,17 @@ export interface ISalesResponse {
   updated_at: Date;
   user: IUserCreateResponse;
 }
+
+export interface Sales {
+  id: string;
+  title: string;
+  year: number;
+  mileage: number;
+  price: number;
+  description: string;
+  type: string;
+  published: boolean;
+  created_at: Date;
+  updated_at: Date;
+  user: IUserCreateResponse;
+}

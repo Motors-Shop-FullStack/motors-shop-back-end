@@ -1,24 +1,21 @@
 import { prisma } from "../../app";
 import { ISalesCreate, ISalesResponse } from "../../interfaces/sales.interface";
+import { AppError } from "../../errors/appError";
 
-export const listSalesService = async (
-  data: ISalesCreate
-): Promise<ISalesResponse> => {
-  const newSale = await prisma.sales.create({
-    data: {
-      title: data.title,
-      year: data.year,
-      mileage: data.mileage,
-      price: data.price,
-      description: data.description,
-      type: data.type == "SELLER" ? "SELLER" : "BUYER",
-      published: data.published ? true : false,
-      userId: data.user.id,
-    },
-    include: {
-      user: true,
-    },
+export const listSalesService = async (idUser: string): Promise<[]> => {
+  const sales = await prisma.sales.findMany({
+    //conect - como era o relations
   });
 
-  return newSale;
+  if (!sales) {
+    throw new AppError("Produto não encontrado", 404);
+  }
+
+  //pegar as Sales do schema sales
+
+  // serviceMyproduct
+  //vou pegar o sales , do array do usuario, fazendo o get no usuario
+  // verificar se preciso fazer a relação ou só passar o campo.
+
+  return sales;
 };

@@ -1,3 +1,11 @@
+export interface IUserRequest {
+  name: string;
+  email: string;
+  password: string;
+  type: boolean;
+  id: string;
+}
+
 export interface IUserLogin {
   email: string;
   password: string;
