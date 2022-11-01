@@ -30,7 +30,7 @@ const ensureAuthMiddleware = (
 
       req.user = {
         id: decoded.id,
-        type: decoded.type,
+        account_type: decoded.account_type,
       };
 
       next();

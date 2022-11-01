@@ -10,6 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Type {
+  SELLER
+  BUYER
+}
+
 model User {
   id           String    @id @unique @default(uuid())
   name         String    @db.VarChar()
@@ -18,14 +23,28 @@ model User {
   cpf          Int       @unique @db.Integer
   phone        Int?
   birthdate    DateTime?
-  account_type String    @db.VarChar()
+  account_type Type      @default(BUYER)
   created_at   DateTime  @default(now())
   updated_at   DateTime  @default(now())
   sales        Sales[]
-  address      String?
   description  String?
+  address      Address?
 
   @@map("users")
+}
+
+model Address {
+  id         String @id @unique @default(uuid())
+  cep        String
+  state      String
+  city       String
+  street     String
+  number     String
+  complement String
+  user       User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id    String @unique
+
+  @@map("adress")
 }
 
 model Sales {
@@ -35,17 +54,22 @@ model Sales {
   mileage     Float    @db.DoublePrecision
   price       Float    @db.Real
   description String   @db.VarChar()
-  type        Type     @default(BUYER)
+  image_cover String   @db.VarChar()
   published   Boolean  @default(true)
   created_at  DateTime @default(now())
   updated_at  DateTime @default(now())
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: SetNull)
   userId      String
+  images      Images[]
 
   @@map("sales")
 }
 
-enum Type {
-  SELLER
-  BUYER
+model Images {
+  id         String @id @unique @default(uuid())
+  image_link String @db.VarChar()
+  sales      Sales  @relation(fields: [sales_id], references: [id], onDelete: Cascade, onUpdate: SetNull)
+  sales_id   String
+
+  @@map("images")
 }

@@ -2,7 +2,7 @@ export interface IUserRequest {
   name: string;
   email: string;
   password: string;
-  type: boolean;
+  account_type: boolean;
   id: string;
 }
 
@@ -20,7 +20,16 @@ export interface IUserCreate {
   birthdate?: Date;
   description?: string;
   account_type: string;
-  address?: string;
+  address: IAddressCreate;
+}
+
+export interface IAddressCreate {
+  cep: string;
+  state: string;
+  city: string;
+  street: string;
+  number: string;
+  complement: string;
 }
 
 export interface IUserCreateResponse {

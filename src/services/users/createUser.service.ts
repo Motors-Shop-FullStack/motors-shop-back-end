@@ -1,7 +1,5 @@
 //import { ISalesCreate } from "../../interfaces/sales.interface" ;
 import { hash } from "bcrypt";
-import { randomUUID } from "crypto";
-import { response } from "express";
 import { prisma } from "../../app";
 import { AppError } from "../../errors/appError";
 import {
@@ -31,7 +29,6 @@ export const createUserService = async (
       phone: data.phone,
       birthdate: data.birthdate,
       description: data.description,
-      address: data.address,
       sales: {
         create: [],
       },
@@ -41,7 +38,32 @@ export const createUserService = async (
     },
   });
 
-  const { password, ...response } = user;
+  const newAddress = await prisma.address.create({
+    data: {
+      cep: data.address.cep,
+      state: data.address.state,
+      city: data.address.city,
+      street: data.address.street,
+      number: data.address.number,
+      complement: data.address.complement,
+      user_id: user.id,
+    },
+  });
+
+  const newUser = await prisma.user.findUnique({
+    where: {
+      id: user.id,
+    },
+    include: {
+      address: true,
+    },
+  });
+
+  if (!newUser) {
+    throw new AppError("User is not created", 400);
+  }
+
+  const { password, ...response } = newUser;
 
   return response;
 };

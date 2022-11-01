@@ -3,7 +3,6 @@ import cors from "cors";
 import { AppError } from "./errors/appError";
 import { routes } from "./routes";
 import { PrismaClient } from "@prisma/client";
-import { salesRoutes } from "./routes/sales.routes";
 
 export const prisma = new PrismaClient();
 
