@@ -11,20 +11,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// app.use(express.urlencoded({ extended: true }));
-
-// app.use(routes);
 appRoute(app);
 
 app.use(handleAppErrorMiddeware);
-
-// app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-//   if (err instanceof AppError) {
-//     res.status(err.statusCode).send({ message: err.message });
-//   }
-//   console.log(err);
-//   return res.status(500).send({ message: "Internal server Error" });
-// });
 
 const port: number = 3000;
 

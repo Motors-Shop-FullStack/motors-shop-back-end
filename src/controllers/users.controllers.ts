@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { iUserCreate } from "../interfaces/users.interface";
 import { createUserService } from "../services/users/createUser.service";
 import { loginUserService } from "../services/users/loginUser.service";
