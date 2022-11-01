@@ -1,10 +1,14 @@
 import { Router } from "express";
-import {
-  createUserController,
-  loginUserController,
-} from "../controllers/users.controllers";
+import { createUserController } from "../controllers/users.controllers";
 
-export const userRoutes = Router();
+const routes = Router();
 
-userRoutes.use("/register", createUserController);
-userRoutes.use("/login", loginUserController);
+export const userRoutes = () => {
+  routes.post("/register/", createUserController);
+  //salesRoutes.use("/myproducts", ensureAuthMiddleware, listMySalesController);
+  //   routes.get("/:id", listSaleByIdController);
+  return routes;
+};
+
+// userRoutes.use("/register", createUserController);
+// userRoutes.use("/login", loginUserController);

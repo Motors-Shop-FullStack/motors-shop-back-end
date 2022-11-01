@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+
 export interface IUserRequest {
   name: string;
   email: string;
@@ -11,7 +13,9 @@ export interface IUserLogin {
   password: string;
 }
 
-export interface IUserCreate {
+type ACCOUNT = "SELLER" | "BUYER";
+
+export interface iUserCreate {
   name: string;
   email: string;
   password: string;
@@ -19,8 +23,36 @@ export interface IUserCreate {
   phone?: number;
   birthdate?: Date;
   description?: string;
+  account_type: ACCOUNT;
+  address: {
+    cep: string;
+    state: string;
+    city: string;
+    street: string;
+    number: string;
+    complement: string;
+  };
+}
+
+export interface iUserCreateResponse {
+  id: string;
+  name: string;
+  email: string;
+  cpf: number;
+  phone?: number | null;
+  birthdate?: Date | null;
+  description?: string | null;
   account_type: string;
-  address: IAddressCreate;
+  created_at: Date;
+  updated_at: Date;
+  address?: {
+    cep: string;
+    state: string;
+    city: string;
+    street: string;
+    number: string;
+    complement: string;
+  };
 }
 
 export interface IAddressCreate {
@@ -30,14 +62,4 @@ export interface IAddressCreate {
   street: string;
   number: string;
   complement: string;
-}
-
-export interface IUserCreateResponse {
-  id: string;
-  name: string;
-  email: string;
-  cpf: number;
-  account_type: string;
-  created_at: Date;
-  updated_at: Date;
 }

@@ -1,20 +1,20 @@
-//import { ISalesCreate } from "../../interfaces/sales.interface" ;
 import { hash } from "bcrypt";
 import { prisma } from "../../app";
 import { AppError } from "../../errors/appError";
 import {
-  IUserCreate,
-  IUserCreateResponse,
+  iUserCreate,
+  iUserCreateResponse,
 } from "../../interfaces/users.interface";
 
 export const createUserService = async (
-  data: IUserCreate
-): Promise<IUserCreateResponse> => {
+  data: iUserCreate
+): Promise<iUserCreateResponse> => {
   const checkUser = await prisma.user.findUnique({
     where: { email: data.email },
   });
+
   if (checkUser) {
-    throw new AppError("User already exists", 400);
+    throw new AppError("Email/CPF already exists", 400);
   }
 
   const hashedPass = await hash(data.password, 8);
@@ -33,37 +33,24 @@ export const createUserService = async (
         create: [],
       },
     },
-    include: {
-      sales: true,
-    },
   });
+  let newAddress;
 
-  const newAddress = await prisma.address.create({
-    data: {
-      cep: data.address.cep,
-      state: data.address.state,
-      city: data.address.city,
-      street: data.address.street,
-      number: data.address.number,
-      complement: data.address.complement,
-      user_id: user.id,
-    },
-  });
-
-  const newUser = await prisma.user.findUnique({
-    where: {
-      id: user.id,
-    },
-    include: {
-      address: true,
-    },
-  });
-
-  if (!newUser) {
-    throw new AppError("User is not created", 400);
+  if (data.address) {
+    newAddress = await prisma.address.create({
+      data: {
+        cep: data.address.cep,
+        state: data.address.state,
+        city: data.address.city,
+        street: data.address.street,
+        number: data.address.number,
+        complement: data.address.complement,
+        user_id: user.id,
+      },
+    });
   }
 
-  const { password, ...response } = newUser;
+  const { password, ...response } = user;
 
   return response;
 };
