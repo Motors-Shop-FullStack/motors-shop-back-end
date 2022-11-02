@@ -7,7 +7,7 @@ import { listSaleByIdController } from "../controllers/sales.controller";
 
 export const salesRoutes = Router();
 
-salesRoutes.use("/", createSalesController);
-salesRoutes.use("/", listSalesController);
-salesRoutes.use("/myproducts", ensureAuthMiddleware, listMySalesController);
-salesRoutes.use("/:id", listSaleByIdController);
+salesRoutes.post("/", createSalesController);
+salesRoutes.get("/", listSalesController);
+salesRoutes.get("/myproducts", ensureAuthMiddleware, listMySalesController);
+salesRoutes.get("/:id", listSaleByIdController);

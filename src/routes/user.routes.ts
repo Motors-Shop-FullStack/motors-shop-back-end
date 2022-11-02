@@ -6,5 +6,5 @@ import {
 
 export const userRoutes = Router();
 
-userRoutes.use("/register", createUserController);
-userRoutes.use("/login", loginUserController);
+userRoutes.post("/register", createUserController);
+userRoutes.post("/login", loginUserController);
