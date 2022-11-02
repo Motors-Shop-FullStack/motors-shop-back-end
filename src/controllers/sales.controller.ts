@@ -16,11 +16,11 @@ export const listSalesController = async (req: Request, res: Response) => {
   return res.status(200).json(sales);
 };
 
-/* export const listMySalesController = async (req: Request, res: Response) => {
+export const listMySalesController = async (req: Request, res: Response) => {
   const id = req.user.id;
   const sales = await listMySalesService(id);
   return res.status(200).json(sales);
-}; */
+};
 
 export const listSaleByIdController = async (req: Request, res: Response) => {
   const { id } = req.params;
