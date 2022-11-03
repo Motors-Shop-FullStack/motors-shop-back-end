@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createUserController,
+  deleteUserController,
   listOneUserController,
   listUsersController,
   loginUserController,
@@ -18,6 +19,7 @@ export const userRoutes = () => {
     schemaValidationMiddleware(UserCreateSchema),
     createUserController
   );
+  routes.delete("/:id/", deleteUserController);
 
   routes.post(
     "/login/",

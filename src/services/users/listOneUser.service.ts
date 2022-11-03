@@ -2,7 +2,9 @@ import { prisma } from "../../app";
 import { AppError } from "../../errors/appError";
 import { iUserResponse } from "../../interfaces/users.interface";
 
-export const listOneUserService = async (userId: string): Promise<any> => {
+export const listOneUserService = async (
+  userId: string
+): Promise<iUserResponse> => {
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
