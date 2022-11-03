@@ -25,7 +25,6 @@ export const createUserService = async (
       email: data.email,
       password: hashedPass,
       cpf: data.cpf,
-      account_type: data.account_type,
       phone: data.phone,
       birthdate: data.birthdate,
       description: data.description,
