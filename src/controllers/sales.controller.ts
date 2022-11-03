@@ -4,6 +4,7 @@ import { deleteSaleService } from "../services/sales/deleteSale.service";
 import { listMySalesService } from "../services/sales/listMySales.service";
 import { listSalesByIdService } from "../services/sales/listSaleById.service";
 import { listSalesService } from "../services/sales/listSales.service";
+import { updateSaleService } from "../services/sales/updateSale.service";
 
 export const createSalesController = async (req: Request, res: Response) => {
   const data = req.body;
@@ -27,6 +28,14 @@ export const listSaleByIdController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const sale = await listSalesByIdService(id);
   return res.status(200).json(sale);
+};
+
+export const updateSaleController = async (req: Request, res: Response) => {
+  const { id: sale_id } = req.params;
+  const { id: user_id } = req.user;
+  const data = req.body;
+  await updateSaleService(sale_id, user_id, data);
+  return res.status(204).json();
 };
 
 export const deleteSaleController = async (req: Request, res: Response) => {

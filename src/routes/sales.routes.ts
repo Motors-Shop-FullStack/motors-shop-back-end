@@ -5,6 +5,7 @@ import {
   listMySalesController,
   listSaleByIdController,
   listSalesController,
+  updateSaleController,
 } from "../controllers/sales.controller";
 import ensureAuthMiddleware from "../middlewares/ensureAuth.middleware";
 
@@ -15,6 +16,7 @@ export const salesRoutes = () => {
   routes.post("", ensureAuthMiddleware, createSalesController);
   routes.get("/my-sales", ensureAuthMiddleware, listMySalesController);
   routes.get("/:id", listSaleByIdController);
+  routes.patch("/:id", ensureAuthMiddleware, updateSaleController);
   routes.delete("/:id", ensureAuthMiddleware, deleteSaleController);
   return routes;
 };
