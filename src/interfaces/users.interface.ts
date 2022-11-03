@@ -21,21 +21,20 @@ export interface iUserCreate {
   birthdate?: Date;
   description?: string;
   account_type: ACCOUNT;
-  address: IAddressCreate;
+  address: iAddressCreate;
 }
 
 export interface iUserCreateResponse {
   id: string;
   name: string;
   email: string;
-  cpf: number;
   account_type: string;
   created_at: Date;
   updated_at: Date;
-  address?: IAddressCreate;
+  address?: iAddressCreate;
 }
 
-export interface IAddressCreate {
+export interface iAddressCreate {
   cep: string;
   state: string;
   city: string;
@@ -48,5 +47,5 @@ export interface ISchemaUser {
   name: string;
   cpf: number;
   password: string;
-  address: IAddressCreate;
+  address: iAddressCreate;
 }
