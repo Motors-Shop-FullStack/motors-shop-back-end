@@ -1,9 +1,9 @@
-import { IUserLogin } from "../../interfaces/users.interface";
-import { AppError } from "../../errors/appError";
-import "dotenv/config";
-import { prisma } from "../../app";
 import { compare } from "bcrypt";
+import "dotenv/config";
 import jwt from "jsonwebtoken";
+import { prisma } from "../../app";
+import { AppError } from "../../errors/appError";
+import { IUserLogin } from "../../interfaces/users.interface";
 
 export const loginUserService = async ({
   email,

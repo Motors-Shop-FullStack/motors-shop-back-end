@@ -1,5 +1,3 @@
-import { EnumDeclaration } from "typescript";
-
 export interface IUserRequest {
   name: string;
   email: string;
@@ -12,7 +10,9 @@ export interface IUserLogin {
   password: string;
 }
 
-export interface IUserCreate {
+type ACCOUNT = "SELLER" | "BUYER";
+
+export interface iUserCreate {
   name: string;
   email: string;
   password: string;
@@ -20,8 +20,19 @@ export interface IUserCreate {
   phone?: number;
   birthdate?: Date;
   description?: string;
-  //  account_type: string;
+  account_type: ACCOUNT;
   address: IAddressCreate;
+}
+
+export interface iUserCreateResponse {
+  id: string;
+  name: string;
+  email: string;
+  cpf: number;
+  account_type: string;
+  created_at: Date;
+  updated_at: Date;
+  address?: IAddressCreate;
 }
 
 export interface IAddressCreate {
@@ -33,12 +44,9 @@ export interface IAddressCreate {
   complement: string;
 }
 
-export interface IUserCreateResponse {
-  id: string;
+export interface ISchemaUser {
   name: string;
-  email: string;
   cpf: number;
-  //  account_type: string;
-  created_at: Date;
-  updated_at: Date;
+  password: string;
+  address: IAddressCreate;
 }

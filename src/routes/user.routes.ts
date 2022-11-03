@@ -3,8 +3,21 @@ import {
   createUserController,
   loginUserController,
 } from "../controllers/users.controllers";
+import schemaValidationMiddleware from "../middlewares/verifySchema.middleware";
+import { UserCreateSchema, UserLoginSchema } from "../schemas/user";
 
-export const userRoutes = Router();
+const routes = Router();
 
-userRoutes.post("/register", createUserController);
-userRoutes.post("/login", loginUserController);
+export const userRoutes = () => {
+  routes.post(
+    "/register/",
+    schemaValidationMiddleware(UserCreateSchema),
+    createUserController
+  );
+  routes.post(
+    "/login/",
+    schemaValidationMiddleware(UserLoginSchema),
+    loginUserController
+  );
+  return routes;
+};

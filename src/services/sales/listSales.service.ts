@@ -6,10 +6,15 @@ export const listSalesService = async (): Promise<ISales[]> => {
     where: {
       published: true,
     },
-    include: {
-      user: true,
-    },
   });
+  // findMany({
+  //   where: {
+  //     published: true,
+  //   },
+  //   include: {
+  //     user: true,
+  //   },
+  // });
 
   return sales;
 };

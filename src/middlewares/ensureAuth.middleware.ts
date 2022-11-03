@@ -1,7 +1,6 @@
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
 import "dotenv/config";
-import { IUserRequest } from "../interfaces/users.interface";
+import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
 
 const ensureAuthMiddleware = (
   req: Request,
@@ -12,7 +11,7 @@ const ensureAuthMiddleware = (
 
   if (!token) {
     return res.status(401).json({
-      message: "Invalid token",
+      message: "Token not found",
     });
   }
 
