@@ -1,14 +1,11 @@
 import { hash } from "bcrypt";
 import { prisma } from "../../app";
 import { AppError } from "../../errors/appError";
-import {
-  iUserCreate,
-  iUserCreateResponse,
-} from "../../interfaces/users.interface";
+import { iUserCreate, iUserResponse } from "../../interfaces/users.interface";
 
 export const createUserService = async (
   data: iUserCreate
-): Promise<iUserCreateResponse> => {
+): Promise<iUserResponse> => {
   const verifyEmail = await prisma.user.findUnique({
     where: { email: data.email },
   });

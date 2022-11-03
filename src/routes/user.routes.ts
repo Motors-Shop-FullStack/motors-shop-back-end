@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createUserController,
+  listOneUserController,
   listUsersController,
   loginUserController,
 } from "../controllers/users.controllers";
@@ -11,7 +12,7 @@ const routes = Router();
 
 export const userRoutes = () => {
   routes.get("", listUsersController);
-
+  routes.get("/:id/", listOneUserController);
   routes.post(
     "/register/",
     schemaValidationMiddleware(UserCreateSchema),

@@ -24,11 +24,10 @@ export interface iUserCreate {
   address: iAddressCreate;
 }
 
-export interface iUserCreateResponse {
+export interface iUserResponse {
   id: string;
   name: string;
   email: string;
-  cpf?: number;
   account_type: string;
   created_at: Date;
   updated_at: Date;
