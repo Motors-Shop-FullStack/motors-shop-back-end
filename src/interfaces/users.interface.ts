@@ -24,6 +24,17 @@ export interface iUserCreate {
   address: iAddressCreate;
 }
 
+export interface iUserUpdate {
+  name?: string;
+  email?: string;
+  password?: string;
+  cpf?: number;
+  phone?: number;
+  birthdate?: Date;
+  description?: string;
+  account_type?: ACCOUNT;
+}
+
 export interface iUserResponse {
   id: string;
   name: string;

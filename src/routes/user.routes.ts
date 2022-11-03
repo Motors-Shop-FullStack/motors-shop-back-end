@@ -5,6 +5,7 @@ import {
   listOneUserController,
   listUsersController,
   loginUserController,
+  updateUserController,
 } from "../controllers/users.controllers";
 import schemaValidationMiddleware from "../middlewares/verifySchema.middleware";
 import { UserCreateSchema, UserLoginSchema } from "../schemas/user";
@@ -19,6 +20,7 @@ export const userRoutes = () => {
     schemaValidationMiddleware(UserCreateSchema),
     createUserController
   );
+  routes.patch("/:id/", updateUserController);
   routes.delete("/:id/", deleteUserController);
 
   routes.post(
