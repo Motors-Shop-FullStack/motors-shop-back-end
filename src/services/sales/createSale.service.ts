@@ -3,7 +3,8 @@ import { AppError } from "../../errors/appError";
 import { ISalesCreate, ISalesResponse } from "../../interfaces/sales.interface";
 
 export const createSaleService = async (
-  data: ISalesCreate
+  data: ISalesCreate,
+  userId: string
 ): Promise<ISalesResponse> => {
   const newSale = await prisma.sales.create({
     data: {
@@ -14,7 +15,7 @@ export const createSaleService = async (
       description: data.description,
       published: data.published,
       image_cover: data.image_cover,
-      userId: data.user.id,
+      userId: userId,
     },
     include: {
       user: true,
