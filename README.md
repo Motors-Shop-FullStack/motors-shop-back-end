@@ -46,7 +46,7 @@ Execute sua aplicação via docker:
 Execute o Prisma:
 
 ```bash
-  yarn prisma
+  yarn prisma generate
 ```
 
 Gerar/Rodar suas migrations:
