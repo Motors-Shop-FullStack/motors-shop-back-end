@@ -1,11 +1,11 @@
 import { prisma } from "../../app";
 import { AppError } from "../../errors/appError";
-import { ISalesCreate, ISalesResponse } from "../../interfaces/sales.interface";
+import { iSalesCreate, iSalesResponse } from "../../interfaces/sales.interface";
 
 export const createSaleService = async (
-  data: ISalesCreate,
+  data: iSalesCreate,
   userId: string
-): Promise<ISalesResponse> => {
+): Promise<iSalesResponse> => {
   const newSale = await prisma.sales.create({
     data: {
       title: data.title,
@@ -22,13 +22,15 @@ export const createSaleService = async (
     },
   });
 
-  for (let i = 0; i < data.images.length; i++) {
-    await prisma.images.create({
-      data: {
-        image_link: data.images[i],
-        sales_id: newSale.id,
-      },
-    });
+  if (data.images) {
+    for (let i = 0; i < data.images.length; i++) {
+      await prisma.images.create({
+        data: {
+          image_link: data.images[i],
+          sales_id: newSale.id,
+        },
+      });
+    }
   }
 
   const sale = await prisma.sales.findUnique({
@@ -36,7 +38,6 @@ export const createSaleService = async (
       id: newSale.id,
     },
     include: {
-      user: true,
       images: true,
     },
   });

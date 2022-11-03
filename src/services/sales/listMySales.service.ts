@@ -1,7 +1,9 @@
 import { prisma } from "../../app";
-import { ISales } from "../../interfaces/sales.interface";
+import { iSalesResponse } from "../../interfaces/sales.interface";
 
-export const listMySalesService = async (id: string): Promise<ISales[]> => {
+export const listMySalesService = async (
+  id: string
+): Promise<iSalesResponse[]> => {
   const sales = await prisma.sales.findMany({
     where: {
       userId: id,

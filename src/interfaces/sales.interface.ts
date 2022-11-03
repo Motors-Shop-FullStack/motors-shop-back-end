@@ -1,6 +1,4 @@
-import { iUserCreateResponse } from "./users.interface";
-
-export interface ISalesCreate {
+export interface iSalesCreate {
   title: string;
   year: number;
   mileage: number;
@@ -9,43 +7,31 @@ export interface ISalesCreate {
   image_cover: string;
   images: string[];
   published: boolean;
-  user: {
-    id: string;
+}
+
+export interface iSalesResponse {
+  id: string;
+  title: string;
+  year: number;
+  mileage: number;
+  price: number;
+  description: string;
+  image_cover: string;
+  images?: iImages[];
+  published: boolean;
+  created_at: Date;
+  updated_at: Date;
+  userId: string;
+  user_info?: {
+    name: string;
+    description?: string | null;
+    phone?: number | null;
+    email: string;
   };
 }
 
-export interface ISalesResponse {
-  id: string;
-  title: string;
-  year: number;
-  mileage: number;
-  price: number;
-  description: string;
-  image_cover: string;
-  images?: IImages[];
-  published: boolean;
-  created_at: Date;
-  updated_at: Date;
-  user: iUserCreateResponse;
-}
-
-export interface IImages {
+export interface iImages {
   id: string;
   image_link: string;
   sales_id: string;
-}
-
-export interface ISales {
-  id: string;
-  title: string;
-  year: number;
-  mileage: number;
-  price: number;
-  description: string;
-  image_cover: string;
-  images?: IImages[];
-  published: boolean;
-  created_at: Date;
-  updated_at: Date;
-  user?: iUserCreateResponse;
 }
