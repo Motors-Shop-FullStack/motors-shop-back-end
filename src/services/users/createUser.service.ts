@@ -1,40 +1,35 @@
 import { hash } from "bcrypt";
 import { prisma } from "../../app";
 import { AppError } from "../../errors/appError";
-import {
-  iUserCreate,
-  iUserCreateResponse,
-} from "../../interfaces/users.interface";
+import { iUserCreate, iUserResponse } from "../../interfaces/users.interface";
 
 export const createUserService = async (
   data: iUserCreate
-): Promise<iUserCreateResponse> => {
+): Promise<iUserResponse> => {
   const verifyEmail = await prisma.user.findUnique({
     where: { email: data.email },
   });
+
+  if (verifyEmail) {
+    throw new AppError("Email already exists");
+  }
 
   const verifyCPF = await prisma.user.findUnique({
     where: { cpf: data.cpf },
   });
 
-  if (verifyEmail || verifyCPF) {
-    if (verifyEmail) {
-      throw new AppError("Email already exists", 400);
-    }
-    throw new AppError("Cpf already exists", 403);
+  if (verifyCPF) {
+    throw new AppError("CPF already exists");
   }
 
   const hashedPass = await hash(data.password, 8);
 
+  const { address, ...rest } = data;
+
   const user = await prisma.user.create({
     data: {
-      name: data.name,
-      email: data.email,
+      ...rest,
       password: hashedPass,
-      cpf: data.cpf,
-      phone: data.phone,
-      birthdate: data.birthdate,
-      description: data.description,
       sales: {
         create: [],
       },
@@ -42,21 +37,16 @@ export const createUserService = async (
   });
   let newAddress;
 
-  if (data.address) {
+  if (address) {
     newAddress = await prisma.address.create({
       data: {
-        cep: data.address.cep,
-        state: data.address.state,
-        city: data.address.city,
-        street: data.address.street,
-        number: data.address.number,
-        complement: data.address.complement,
+        ...address,
         user_id: user.id,
       },
     });
   }
 
-  const { password, ...response } = user;
+  const { password, cpf, ...response } = user;
 
   return response;
 };
