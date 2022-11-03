@@ -21,13 +21,15 @@ export const createSaleService = async (
     },
   });
 
-  for (let i = 0; i < data.images.length; i++) {
-    await prisma.images.create({
-      data: {
-        image_link: data.images[i],
-        sales_id: newSale.id,
-      },
-    });
+  if (data.images) {
+    for (let i = 0; i < data.images.length; i++) {
+      await prisma.images.create({
+        data: {
+          image_link: data.images[i],
+          sales_id: newSale.id,
+        },
+      });
+    }
   }
 
   const sale = await prisma.sales.findUnique({
@@ -35,7 +37,6 @@ export const createSaleService = async (
       id: newSale.id,
     },
     include: {
-      user: true,
       images: true,
     },
   });

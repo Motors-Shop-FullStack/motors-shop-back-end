@@ -1,15 +1,19 @@
 import { Request, Response } from "express";
 import { createSaleService } from "../services/sales/createSale.service";
 import { listSalesService } from "../services/sales/listSales.service";
-import { listMySalesService } from "../services/sales/listMySales.service";
-import { listSalesByIdService } from "../services/sales/listSaleById.service";
-import { AppError } from "../errors/appError";
+// import { listMySalesService } from "../services/sales/listMySales.service";
+// import { listSalesByIdService } from "../services/sales/listSaleById.service";
+// import { AppError } from "../errors/appError";
 
-// export const createSalesController = async (req: Request, res: Response) => {
-//   const data = req.body;
-//   const sale = await createSaleService(data);
-//   return res.status(201).json(sale);
-// };
+export const createSalesController = async (req: Request, res: Response) => {
+  const data = req.body;
+  const { id } = req.user;
+  data.user = {
+    id,
+  };
+  const sale = await createSaleService(data);
+  return res.status(201).json(sale);
+};
 
 export const listSalesController = async (req: Request, res: Response) => {
   const sales = await listSalesService();

@@ -1,4 +1,4 @@
-import { IUserCreateResponse } from "./users.interface";
+import { iUserCreateResponse } from "./users.interface";
 
 export interface ISalesCreate {
   title: string;
@@ -23,10 +23,10 @@ export interface ISalesResponse {
   description: string;
   image_cover: string;
   images?: IImages[];
-  published: boolean;
+  published?: boolean;
   created_at: Date;
   updated_at: Date;
-  user: IUserCreateResponse;
+  userId: string;
 }
 
 export interface IImages {
@@ -47,5 +47,5 @@ export interface ISales {
   published: boolean;
   created_at: Date;
   updated_at: Date;
-  user?: IUserCreateResponse;
+  user?: iUserCreateResponse;
 }
