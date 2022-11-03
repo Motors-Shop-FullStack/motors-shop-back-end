@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "linux-musl"]
 }
 
 datasource db {
@@ -10,10 +11,66 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Type {
+  SELLER
+  BUYER
+}
+
 model User {
-  id         Int      @id @default(autoincrement())
-  name       String
-  created_at DateTime @default(now())
+  id           String    @id @unique @default(uuid())
+  name         String    @db.VarChar()
+  email        String    @unique @db.VarChar()
+  password     String    @db.VarChar()
+  cpf          Int       @unique @db.Integer
+  phone        Int?
+  birthdate    DateTime?
+  account_type Type      @default(BUYER)
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @default(now())
+  sales        Sales[]
+  description  String?
+  address      Address?
 
   @@map("users")
+}
+
+model Address {
+  id         String @id @unique @default(uuid())
+  cep        String
+  state      String
+  city       String
+  street     String
+  number     String
+  complement String
+  user       User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id    String @unique
+
+  @@map("adress")
+}
+
+model Sales {
+  id          String   @id @unique @default(uuid())
+  title       String   @db.VarChar()
+  year        Int      @db.Integer
+  mileage     Float    @db.DoublePrecision
+  price       Float    @db.Real
+  description String   @db.VarChar()
+  image_cover String   @db.VarChar()
+  published   Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: SetNull)
+  userId      String
+  images      Images[]
+
+  @@map("sales")
+}
+
+model Images {
+  id         String @id @unique @default(uuid())
+  image_link String @db.VarChar()
+  sales      Sales  @relation(fields: [sales_id], references: [id], onDelete: Cascade, onUpdate: SetNull)
+  sales_id   String
+
+  @@map("images")
 }
