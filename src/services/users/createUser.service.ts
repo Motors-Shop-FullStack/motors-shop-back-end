@@ -9,12 +9,19 @@ import {
 export const createUserService = async (
   data: iUserCreate
 ): Promise<iUserCreateResponse> => {
-  const checkUser = await prisma.user.findUnique({
+  const verifyEmail = await prisma.user.findUnique({
     where: { email: data.email },
   });
 
-  if (checkUser) {
-    throw new AppError("Email/CPF already exists", 400);
+  const verifyCPF = await prisma.user.findUnique({
+    where: { cpf: data.cpf },
+  });
+
+  if (verifyEmail || verifyCPF) {
+    if (verifyEmail) {
+      throw new AppError("Email already exists", 400);
+    }
+    throw new AppError("Cpf already exists", 403);
   }
 
   const hashedPass = await hash(data.password, 8);

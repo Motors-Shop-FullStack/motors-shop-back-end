@@ -1,5 +1,3 @@
-import { Prisma } from "@prisma/client";
-
 export interface IUserRequest {
   name: string;
   email: string;
@@ -62,4 +60,11 @@ export interface IAddressCreate {
   street: string;
   number: string;
   complement: string;
+}
+
+export interface ISchemaUser {
+  name: string;
+  cpf: number;
+  password: string;
+  address: IAddressCreate;
 }

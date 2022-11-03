@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AppError } from "../errors/appError";
 
 const handleAppErrorMiddeware = (
@@ -15,6 +15,7 @@ const handleAppErrorMiddeware = (
 
   return res.status(500).json({
     message: "Internal server error.",
+    error: error.message,
   });
 };
 
