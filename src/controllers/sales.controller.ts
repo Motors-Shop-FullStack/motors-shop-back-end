@@ -32,15 +32,13 @@ export const listSaleByIdController = async (req: Request, res: Response) => {
 
 export const updateSaleController = async (req: Request, res: Response) => {
   const { id: sale_id } = req.params;
-  const { id: user_id } = req.user;
   const data = req.body;
-  await updateSaleService(sale_id, user_id, data);
+  await updateSaleService(sale_id, data);
   return res.status(204).json();
 };
 
 export const deleteSaleController = async (req: Request, res: Response) => {
   const { id: sale_id } = req.params;
-  const { id: user_id } = req.user;
-  await deleteSaleService(sale_id, user_id);
+  await deleteSaleService(sale_id);
   return res.status(204).json();
 };

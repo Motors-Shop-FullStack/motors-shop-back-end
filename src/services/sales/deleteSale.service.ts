@@ -1,21 +1,8 @@
 import { prisma } from "../../app";
-import { AppError } from "../../errors/appError";
 
-export const deleteSaleService = async (id_sale: string, id_user: string) => {
-  const sale = await prisma.sales.findUnique({
-    where: { id: id_sale },
-  });
-
-  if (!sale) {
-    throw new AppError("Sale not found");
-  }
-
-  if (sale.userId != id_user) {
-    throw new AppError("You cannot make this action", 403);
-  }
-
+export const deleteSaleService = async (id_sale: string) => {
   await prisma.sales.delete({
-    where: { id: sale.id },
+    where: { id: id_sale },
   });
   return;
 };
