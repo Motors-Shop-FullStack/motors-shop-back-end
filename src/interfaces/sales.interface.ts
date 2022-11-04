@@ -27,7 +27,7 @@ export interface iSalesResponse {
     name: string;
     description?: string | null;
     phone?: number | null;
-    email: string;
+    email?: string;
   };
 }
 

@@ -19,6 +19,7 @@ export const listSalesByIdService = async (
     throw new AppError("Produto não encontrado", 404);
   }
   const User = sale.user;
+
   const user_info = {
     name: User.name,
     description: User.description,
