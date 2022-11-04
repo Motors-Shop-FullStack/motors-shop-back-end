@@ -47,7 +47,10 @@ model Address {
 
   @@map("adress")
 }
-
+enum Vehicle_type{
+  Car
+  Motorcycle
+}
 model Sales {
   id          String   @id @unique @default(uuid())
   title       String   @db.VarChar()
@@ -57,6 +60,7 @@ model Sales {
   description String   @db.VarChar()
   image_cover String   @db.VarChar()
   published   Boolean  @default(true)
+  type        Vehicle_type 
   created_at  DateTime @default(now())
   updated_at  DateTime @default(now())
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: SetNull)

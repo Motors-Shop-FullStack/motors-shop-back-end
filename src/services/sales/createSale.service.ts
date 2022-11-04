@@ -15,6 +15,7 @@ export const createSaleService = async (
       description: data.description,
       published: data.published,
       image_cover: data.image_cover,
+      type: data.type,
       userId: userId,
     },
     include: {
