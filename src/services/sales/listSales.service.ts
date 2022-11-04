@@ -6,7 +6,18 @@ export const listSalesService = async (): Promise<iSalesResponse[]> => {
     where: {
       published: true,
     },
+    include: {
+      user: true,
+    },
   });
 
-  return sales;
+  const response: iSalesResponse[] = [];
+
+  sales.forEach((sale) => {
+    const { name } = sale.user;
+    const { user, ...rest } = sale;
+
+    response.push({ ...rest, user_info: { name } });
+  });
+  return response;
 };
