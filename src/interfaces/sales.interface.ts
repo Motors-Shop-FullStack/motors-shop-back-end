@@ -5,6 +5,7 @@ export interface iSalesCreate {
   price: number;
   description: string;
   image_cover: string;
+  type: "Car" | "Motorcycle";
   images: string[];
   published: boolean;
 }
