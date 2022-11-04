@@ -1,4 +1,5 @@
-import { prisma } from "../../app";
+// import { prisma } from "../../app";
+import prisma from "../../../prisma/client";
 import { AppError } from "../../errors/appError";
 import { iUserResponse } from "../../interfaces/users.interface";
 
