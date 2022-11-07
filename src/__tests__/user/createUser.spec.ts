@@ -1,18 +1,11 @@
-import { prismaMock } from "../../../prisma/singleton";
-import { v4 as uuidv4 } from "uuid";
 import { createUserService } from "../../services/users/createUser.service";
 import { Type } from "@prisma/client";
-import { createUser, usersMemory } from "../../../prisma/InMemoryRepo";
+import { prisma } from "../../app";
 
-describe("Create user service", () => {
+describe("CRUD User service", () => {
   const user = {
-    // id: uuidv4(),
     name: "Test",
     email: "test@test.com",
-    // phone: 999999999,
-    // birthdate: new Date(),
-    // created_at: new Date(),
-    // updated_at: new Date(),
     password: "123456",
     cpf: 123456789123,
     account_type: Type.BUYER,
@@ -26,16 +19,18 @@ describe("Create user service", () => {
       complement: "Test",
     },
   };
-  test("should create new user", async () => {
-    const newUser = createUser(user);
 
-    await expect(usersMemory.length).toEqual(1);
+  afterAll(async () => {
+    const deleteUsers = prisma.user.deleteMany();
+
+    await prisma.$transaction([deleteUsers]);
+
+    await prisma.$disconnect();
   });
-  //   test("should create new user", async () => {
-  //     const { password, cpf, ...rest } = user;
 
-  //     prismaMock.user.create.mockResolvedValue(user);
+  test("should create new user", async () => {
+    const newUser = await createUserService(user);
 
-  //     await expect(createUserService(user)).resolves.toEqual(rest);
-  //   });
+    expect(newUser).toHaveProperty("id");
+  });
 });
