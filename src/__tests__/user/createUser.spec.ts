@@ -3,7 +3,7 @@ import { Type } from "@prisma/client";
 import { prisma } from "../../app";
 
 describe("CRUD User service", () => {
-  const user = {
+  const userData = {
     name: "Test",
     email: "test@test.com",
     password: "123456",
@@ -19,18 +19,37 @@ describe("CRUD User service", () => {
       complement: "Test",
     },
   };
-
-  afterAll(async () => {
+  beforeAll(async () => {
     const deleteUsers = prisma.user.deleteMany();
-
     await prisma.$transaction([deleteUsers]);
-
     await prisma.$disconnect();
   });
 
-  test("should create new user", async () => {
-    const newUser = await createUserService(user);
+  afterAll(async () => {
+    const deleteUsers = prisma.user.deleteMany();
+    await prisma.$transaction([deleteUsers]);
+    await prisma.$disconnect();
+  });
 
-    expect(newUser).toHaveProperty("id");
+  it("should be able to create new user", async () => {
+    const user = await createUserService(userData);
+
+    expect(user).toHaveProperty("id");
+    expect(user.created_at).toBeInstanceOf(Date);
+    expect(user.updated_at).toBeInstanceOf(Date);
+  });
+
+  it("should not be able to create new user with same email", async () => {
+    try {
+      await createUserService(userData);
+    } catch (error) {
+      expect(error).toHaveProperty("message", "Email already exists");
+    }
+  });
+
+  it("should be able to list an user", async () => {
+    const user = await prisma.user.findMany();
+
+    expect(user.length).toEqual(1);
   });
 });
