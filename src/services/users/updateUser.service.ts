@@ -6,7 +6,7 @@ import { iUserResponse, iUserUpdate } from "../../interfaces/users.interface";
 export const updateUserService = async (
   userId: string,
   data: iUserUpdate
-): Promise<any> => {
+): Promise<iUserResponse> => {
   if (data.cpf) {
     const verifyCPF = await prisma.user.findUnique({
       where: {
@@ -64,5 +64,7 @@ export const updateUserService = async (
   if (newUser) {
     const { password, cpf, ...response } = newUser;
     return response;
+  } else {
+    throw new AppError("User not found!");
   }
 };
