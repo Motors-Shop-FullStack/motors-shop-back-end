@@ -20,15 +20,17 @@ describe("CRUD User service", () => {
     },
   };
   beforeAll(async () => {
-    const deleteUsers = prisma.user.deleteMany();
-    await prisma.$transaction([deleteUsers]);
-    await prisma.$disconnect();
+    // const deleteUsers =
+    await prisma.user.deleteMany();
+    // await prisma.$transaction([deleteUsers]);
+    // await prisma.$disconnect();
   });
 
   afterAll(async () => {
-    const deleteUsers = prisma.user.deleteMany();
-    await prisma.$transaction([deleteUsers]);
-    await prisma.$disconnect();
+    // const deleteUsers = prisma.user.deleteMany();
+    // await prisma.$transaction([deleteUsers]);
+    // await prisma.$disconnect();
+    await prisma.user.deleteMany();
   });
 
   it("should be able to create new user", async () => {
