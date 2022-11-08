@@ -1,5 +1,6 @@
 import { hash } from "bcrypt";
-import { prisma } from "../../app";
+import prisma from "../../../prisma/client";
+// import { prisma } from "../../app";
 import { AppError } from "../../errors/appError";
 import { iUserCreate, iUserResponse } from "../../interfaces/users.interface";
 

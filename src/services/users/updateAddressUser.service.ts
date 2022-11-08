@@ -1,4 +1,5 @@
-import { prisma } from "../../app";
+// import { prisma } from "../../app";
+import prisma from "../../../prisma/client";
 import { iAddressUpdate } from "../../interfaces/users.interface";
 
 export const updateAddressUserService = async (

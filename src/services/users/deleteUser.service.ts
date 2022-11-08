@@ -1,4 +1,5 @@
-import { prisma } from "../../app";
+// import { prisma } from "../../app";
+import prisma from "../../../prisma/client";
 
 export const deleteUserService = async (userId: string): Promise<void> => {
   const user = await prisma.user.delete({
